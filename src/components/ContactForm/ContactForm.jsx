@@ -1,28 +1,17 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+
 import css from './ContactForm.module.scss';
 
 const ContactForm = ({ onAddContact }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
-  const handleChange = ({ target: { name, value } }) => {
-    if (name === 'name') {
-      setName(value);
-    } else if (name === 'number') {
-      setNumber(value);
-    }
-  };
-
   const onSubmitForm = event => {
     event.preventDefault();
+    const name = event.target.name.value;
+    const number = event.target.number.value;
     if (number === '') {
       alert('Please enter number');
       return;
     }
     onAddContact({ name, number });
-    setName('');
-    setNumber('');
   };
   return (
     <>
@@ -35,8 +24,6 @@ const ContactForm = ({ onAddContact }) => {
           // pattern="^[a\-zA\-Zа\-яА-Я]+((['\-][a\-zA\-Zа\-яА\-Я ])?[a\-zA\-Zа\-яА\-Я]*)*$"
           id="name"
           name="name"
-          value={name}
-          onChange={handleChange}
           required
         />
         <label htmlFor="name" className={css.form__label}>
@@ -51,8 +38,6 @@ const ContactForm = ({ onAddContact }) => {
           id="email"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           // pattern="^\+?\d{1,4}[#\-.\s]?\(?\d{1,3}\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}$"
-          value={number}
-          onChange={handleChange}
         />
         <label htmlFor="email" className={css.form__label}>
           Number
